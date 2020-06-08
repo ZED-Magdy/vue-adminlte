@@ -1,32 +1,102 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="wrapper" id="app">
+
+        <!-- Navbar -->
+        <navbar></navbar>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <sidenav></sidenav>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">{{ $router.history.current.name }}</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item">
+                                    <router-link to="/">Home</router-link>
+                                </li>
+                                <li class="breadcrumb-item active">{{$router.history.current.name || 'Dashboard'}}</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <router-view></router-view>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Control Sidebar -->
+        <controlside></controlside>
+        <!-- /.control-sidebar -->
+        <mainFooter></mainFooter>
+        <!-- Main Footer -->
     </div>
-    <router-view/>
-  </div>
+
 </template>
-
+<script>
+    import navbar from './components/navbar'
+    import sidenav from './components/sidenav'
+    import controlside from './components/controlside'
+    import mainFooter from './components/mainFooter'
+    export default {
+        components: {
+            navbar,
+            sidenav,
+            controlside,
+            mainFooter
+        },
+        mounted() {
+            this.$store.dispatch('auth/init')
+        },
+    }
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    @import '~nprogress/nprogress.css';
+    @media print {
+        body * {
+            visibility: hidden;
+        }
 
-#nav {
-  padding: 30px;
-}
+        .printable,
+        .printable * {
+            visibility: visible;
+        }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+        .printable {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+        .printable a {
+            text-decoration: none;
+            color: #000;
+        }
+    }
+    #nprogress .bar {
+        background: rgb(182, 27, 27);
+        z-index: 1038;
+    }
+
+    #nprogress .spinner {
+        display: none;
+    }
 </style>
