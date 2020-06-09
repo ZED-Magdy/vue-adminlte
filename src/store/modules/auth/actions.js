@@ -10,8 +10,14 @@ async function init ({commit, getters}){
     //add the access token to the api headers if existed then,
     //Check if the user is already logged in
     setHeaders();
-    const user = await getAuthUser(); // return object or null
-    commit("AUTH_USER_CHANGED",user);
+    // const user = await getAuthUser(); // return object or null
+    // commit("AUTH_USER_CHANGED",user);
+    // return getters.isLoggedIn;
+}
+async function signIn({commit, getters},credentials){
+    // => await login(credentials)
+    jsCookies.set('access_token','somerandomedummydata')
+    commit("AUTH_USER_CHANGED",{name: 'username'});
     return getters.isLoggedIn;
 }
 
@@ -19,4 +25,4 @@ function setHeaders(){
     let token = jsCookies.get('access_token');
     api.defaults.headers.common.Authorization = token ? "Bearer " + token : ''
 }
-export default { init }
+export default { init, signIn }

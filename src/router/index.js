@@ -56,11 +56,11 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
           }
           else{
             jsCookies.remove('access_token') // access token has expired
-            next({name: 'Users'}) // change the name to ur login route
+            next({name: 'Login'}) // change the name to ur login route
           }
         }
       }else {
-        next({name: 'Users'}) // change the name to ur login route
+        next({name: 'Login'}) // change the name to ur login route
       }
       NProgress.done()
       break;
